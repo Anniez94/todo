@@ -70,10 +70,10 @@ function App() {
         />
 
         {newTask.length ?
-          <div className='flex flex-row items-center gap-2 newTask mt-6 justify-self-start mb-6 h-18' onClick={addNewTask}>
+          <div className='flex flex-row items-center gap-2 newTask mt-6 justify-self-start mb-6 h-18' onClick={addNewTask} data-testid="add">
             <FiPlus />
             <p>Add</p>
-          </div> : <div />
+          </div> : <div data-testid="disabed-add"/>
         }
 
       </div>
@@ -89,15 +89,18 @@ function App() {
       }
 
       <div className='scroll'>
+
         {tasks.map((task, index) => (
-          <Card
+          <div key={index}>
+             <Card
             index={index}
             task={task}
             deleteTask={deleteTask}
             clickhandler={clickhandler}
             check={check} />
+            </div>
+         
         ))}
-
       </div>
     </div >
 
