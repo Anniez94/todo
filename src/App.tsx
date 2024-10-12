@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FiPlus } from "react-icons/fi"
 
 import './App.css';
 import { add, remove, removeMultiple, cleanTask } from './redux/reducers/tasks';
 import { useAppDispatch, useAppSelector } from './redux/store';
 import Card from 'src/components/Card';
+import Header from 'src/components/Header';
+import AddBtn from 'src/components/AddBtn';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -62,6 +63,7 @@ function App() {
           name="newTask"
           onChange={handleChange}
           value={newTask}
+          aria-label="input"
           onKeyDown={event => {
             if (event.key === 'Enter') {
               addNewTask()
@@ -69,39 +71,23 @@ function App() {
           }}
         />
 
-        {newTask.length ?
-          <div className='flex flex-row items-center gap-2 newTask mt-6 justify-self-start mb-6 h-18' onClick={addNewTask} data-testid="add">
-            <FiPlus />
-            <p>Add</p>
-          </div> : <div data-testid="disabed-add"/>
-        }
+        {!!newTask.length && <AddBtn addNewTask={addNewTask} />}
 
       </div>
 
-      {tasks.length ?
-        <div className='grid grid-cols-3 mb-2 mt-10'>
-          <h1 className="text-4xl font-bold font-sans col-span-2">
-            Task(s)
-          </h1>
-          {check.length ?
-            <button className='font-sans justify-self-end button px-6 py-2 font-bold' onClick={deleteMultiple}>Delete Selected</button> : null}
-        </div> : null
+      {!!tasks.length &&
+        <Header
+          check={check}
+          deleteMultiple={deleteMultiple}
+        />
       }
 
-      <div className='scroll'>
-
-        {tasks.map((task, index) => (
-          <div key={index}>
-             <Card
-            index={index}
-            task={task}
-            deleteTask={deleteTask}
-            clickhandler={clickhandler}
-            check={check} />
-            </div>
-         
-        ))}
-      </div>
+      <Card
+        tasks={tasks}
+        deleteTask={deleteTask}
+        clickhandler={clickhandler}
+        check={check}
+      />
     </div >
 
   );
