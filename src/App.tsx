@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import './App.css';
+
 import { add, remove, removeMultiple, cleanTask } from './redux/reducers/tasks';
 import { useAppDispatch, useAppSelector } from './redux/store';
 import Card from 'src/components/Card';
 import Header from 'src/components/Header';
 import AddBtn from 'src/components/AddBtn';
+
+import './App.css';
 
 function App() {
   const dispatch = useAppDispatch();
